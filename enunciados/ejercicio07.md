@@ -19,11 +19,13 @@ Haciendo uso de las recomendaciones para la estructuración de módulos de Terra
 - El módulo debe ser capaz de crear:
   - Una VNet sobre un grupo de recursos existente o crear dicho grupo si no existe.
   - Cero o varias subnets dentro de la VNet. _(Utiliza módulos anidados para esto)_
-  - Cero o varios network security groups asociados a una o varias subnets. _(Utiliza módulos anidados para esto)_
+  - **[¡¡OPCIONAL!!]** Cero o varios network security groups asociados a una o varias subnets. _(Utiliza módulos anidados para esto)_
 - El módulo debe contener las validaciones que consideres necesarias para asegurar su correcto funcionamiento. <br/>**Nota:** Recuerda que los recursos de azurerm ya contienen validaciones por defecto que no son necesarias repetir, solo utiliza las validaciones que aporten valor para tu caso de uso.
 - No es necesario definir todos los argumentos de los recursos proporcionados por azurerm, solo los **obligatorios** (es decir, en la documentación de azurerm, solo deben usarse los argumentos especificados como obligatorios bajo la sección *Argument Reference*).
 
-Una vez completado el módulo, crea un ejemplo de uso que contenga la creación de una VNet con dos subnets y un network security group asociado a una de las subnets. No es necesario que las reglas del network security group tenga sentido, simplemente añade reglas de ejemplo.
+Una vez completado el módulo, crea un ejemplo de uso que contenga la creación de una VNet con dos subnets.
+
+Si se ha decidido desarrollar el apartado opcional, crea también un network security group asociado a una de las subnets anteriores. No es necesario que las reglas del network security group tenga sentido, simplemente añade reglas de ejemplo.
 
 El ejemplo de uso puede constar de un solo fichero `main.tf` si se desea.
 
