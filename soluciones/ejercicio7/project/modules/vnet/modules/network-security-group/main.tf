@@ -28,14 +28,3 @@ resource "azurerm_network_security_group" "mi_security_group" {
     destination_address_prefix = "*"
   }
 }
-
-resource "azurerm_subnet_network_security_group_association" "sec_group_subnets_asoc" {
-  for_each                   = {
-    for index, subnet in var.subnets:
-    subnet => subnet
-  }
-
-  subnet_id                 = each.key
-  network_security_group_id = azurerm_network_security_group.mi_security_group.id
-}
-
