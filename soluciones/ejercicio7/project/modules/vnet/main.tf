@@ -45,15 +45,8 @@ module "network_security_group" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "sec_group_subnets_asoc" {
-  for_each                   = (module.subnets.subnet_ids)
-
-  subnet_id                 = each.value
+  count = length(module.subnets.ids)
+  subnet_id                 = module.subnets.ids[count.index]
   network_security_group_id = module.network_security_group.network_security_group_id
 }
-
-
-output "subnet_associations" {
-  value = azurerm_subnet_network_security_group_association.sec_group_subnets_asoc
-}
-
 
