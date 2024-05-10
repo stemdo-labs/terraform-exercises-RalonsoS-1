@@ -1,0 +1,5 @@
+resource_group_name = "rg-semanal"
+resource_group_location = "eastus"
+virtual_network_name = "vnet-semanal"
+subnet_name = "subnet-semanal"
+network_interface_name = "nic-semanal"
