@@ -13,11 +13,11 @@ provider "azurerm" {
 
 module "vnet" {
   source = "./modules/vnet"
-  resource_group_name = "rg-semanal"
-  resource_group_location = "eastus"
-  virtual_network_name = "vnet-semanal"
-  subnet_name = "subnet-semanal"
-  network_interface_name = "nic-semanal"
+  resource_group_name = "rg-semanal-ralonso"
+  resource_group_location = "West Europe"
+  virtual_network_name = "vnet-semanal-ralonso"
+  subnet_name = "subnet-semanal-ralonso"
+  network_interface_name = "nic-semanal-ralonso"
 }
 
 module "lb" {

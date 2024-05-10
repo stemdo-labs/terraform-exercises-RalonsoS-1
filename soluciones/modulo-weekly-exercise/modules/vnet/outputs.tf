@@ -26,6 +26,10 @@ output "lb_public_ip_name" {
   value = azurerm_public_ip.lb_public_ip.name
 }
 
+output "lb_public_ip" {
+  value = azurerm_public_ip.lb_public_ip
+}
+
 output "vms" {
   value = module.vms
 }

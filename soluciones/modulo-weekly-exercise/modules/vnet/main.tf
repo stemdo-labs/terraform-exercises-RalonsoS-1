@@ -30,6 +30,31 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
+# Create Network Security Group and rules
+resource "azurerm_network_security_group" "my_nsg" {
+  name                = "nsg-semanal-ralonso"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  security_rule {
+    name                       = "web"
+    priority                   = 1008
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "10.0.1.0/24"
+  }
+}
+
+# Associate the Network Security Group to the subnet
+resource "azurerm_subnet_network_security_group_association" "my_nsg_association" {
+  subnet_id                 = azurerm_subnet.subnet.id
+  network_security_group_id = azurerm_network_security_group.my_nsg.id
+}
+
 resource "azurerm_public_ip" "lb_public_ip" {
   name                = var.public_ip_name
   location            = azurerm_resource_group.rg.location
