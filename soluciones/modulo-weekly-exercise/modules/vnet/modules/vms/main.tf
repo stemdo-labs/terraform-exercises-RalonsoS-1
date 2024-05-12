@@ -1,16 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.102.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each = { for idx, vm in var.virtual_machines : idx => vm }
 

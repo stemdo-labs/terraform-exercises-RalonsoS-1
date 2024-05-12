@@ -17,7 +17,7 @@ variable "virtual_network" {
     address_space  = list(string)
   })
   default = {
-    name           = "default_virtual_network_name"
+    name           = "weekly-vnet"
     address_space  = ["10.0.0.0/16"]
   }
 }
