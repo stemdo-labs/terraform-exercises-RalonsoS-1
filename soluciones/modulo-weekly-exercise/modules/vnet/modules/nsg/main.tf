@@ -1,16 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.102.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
 # Create Network Security Group and rules
 resource "azurerm_network_security_group" "my_nsg" {
   name                = var.nsg_name

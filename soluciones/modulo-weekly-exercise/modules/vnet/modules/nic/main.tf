@@ -1,16 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.102.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_network_interface" "nic" {
   count               = var.vms_quantity
   name                = "${var.network_interface_name}${count.index}"

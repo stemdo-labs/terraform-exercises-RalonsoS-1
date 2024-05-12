@@ -1,17 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.102.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
-# Sondeo y reglas
 resource "azurerm_lb_probe" "my_lb_probe" {
   loadbalancer_id     = var.load_balancer_id
   name                = "weekly-lb-probe"
