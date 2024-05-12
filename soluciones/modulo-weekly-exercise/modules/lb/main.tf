@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_lb" "my_lb" {
   name                = var.load_balancer_name
   location            = var.resource_group_location
