@@ -6,7 +6,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location            = var.resource_group_location
   size                = each.value.size
   admin_username      = each.value.admin_username
-  admin_password      = "1234"
+  admin_password      = "aABBcc-1234"
   network_interface_ids = [var.virtual_machine_network_interface_ids[each.key]]
 
   os_disk {
