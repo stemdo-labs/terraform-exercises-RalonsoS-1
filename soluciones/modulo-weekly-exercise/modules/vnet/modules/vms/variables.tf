@@ -1,3 +1,8 @@
+variable "virtual_machine_network_interface_ids" {
+  type = list(string)
+  description = "Nic id for the vm to link it to existing subnet"
+}
+
 variable "resource_group_name" {
   type = string
   description = "Name of thee resource group."
@@ -5,41 +10,32 @@ variable "resource_group_name" {
 
 variable "resource_group_location" {
   type        = string
-  default     = "eastus"
   description = "Location of the resource group."
 }
 
-variable "virtual_machine_name" {
-  type        = string
-  default     = "vm-semanal"
-  description = "Name of the Virtual Machine."
-}
-
-variable "virtual_machine_size" {
-  type        = string
-  default     = "Standard_F2"
-  description = "Size or SKU of the Virtual Machine."
-}
-
-variable "virtual_machine_admin_username" {
-  type        = string
-  default     = "adminuser"
-  description = "VM admin username."
-}
-
-variable "virtual_machine_network_interface_ids" {
-  type = list(string)
-  description = "Nic id for the vm to link it to existing subnet"
-}
-
-variable "disk_name" {
-  type        = string
-  default     = "vm-disk-semanal"
-  description = "Name of the OS disk of the Virtual Machine."
-}
-
-variable "redundancy_type" {
-  type        = string
-  default     = "Standard_LRS"
-  description = "Storage redundancy type of the OS disk."
+variable "virtual_machines" {
+  description = "List of virtual machines to create"
+  type = list(object({
+    name                = string
+    size                = string
+    admin_username      = string
+    disk_name           = string
+    redundancy_type     = string
+  }))
+  default = [
+    {
+      name = "vm1"
+      size = "Standard_F2"
+      admin_username = "adminuser"
+      disk_name = "vm-1-disk_semanal"
+      redundancy_type = "Standard_LRS"
+    },
+    {
+      name = "vm2"
+      size = "Standard_F2"
+      admin_username = "adminuser"
+      disk_name = "vm-2-disk_semanal"
+      redundancy_type = "Standard_LRS"
+    }
+  ]
 }
