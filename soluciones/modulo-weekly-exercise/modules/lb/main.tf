@@ -36,31 +36,36 @@ resource "azurerm_network_interface_backend_address_pool_association" "my_nic_lb
 }
 
 # Sondeo y reglas
-resource "azurerm_lb_probe" "my_lb_probe" {
-  loadbalancer_id     = azurerm_lb.my_lb.id
-  name                = "weekly-probe"
-  port                = 80
-}
+module "lb_probe_and_rules" {
+  source = "./modules/lb_probe_and_rules"
 
-resource "azurerm_lb_rule" "my_lb_rule" {
-  loadbalancer_id                = azurerm_lb.my_lb.id
-  name                           = "test-rule"
-  protocol                       = "Tcp"
-  frontend_port                  = 80
-  backend_port                   = 80
-  disable_outbound_snat          = true
+  load_balancer_id               = azurerm_lb.my_lb.id
   frontend_ip_configuration_name = var.public_ip_name
-  probe_id                       = azurerm_lb_probe.my_lb_probe.id
-  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.my_lb_pool.id]
-}
+  lb_backend_pool_id             = azurerm_lb_backend_address_pool.my_lb_pool.id
 
-resource "azurerm_lb_outbound_rule" "my_lboutbound_rule" {
-  name                    = "test-outbound"
-  loadbalancer_id         = azurerm_lb.my_lb.id
-  protocol                = "Tcp"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.my_lb_pool.id
+  lb_rules = [
+    {
+      name                   = "rule-1"
+      protocol               = "Tcp"
+      frontend_port          = 80
+      backend_port           = 80
+      disable_outbound_snat  = true
+    },
+    {
+      name                   = "rule-2"
+      protocol               = "Tcp"
+      frontend_port          = 443
+      backend_port           = 8443
+      disable_outbound_snat  = true
+    }
+  ]
 
-  frontend_ip_configuration {
-    name = var.public_ip_name
-  }
+  outbound_rules = [
+    {
+      name                    = "outbound-rule-1"
+      protocol                = "Tcp"
+      frontend_ip_configuration_name = var.public_ip_name
+      backend_address_pool_id = azurerm_lb_backend_address_pool.my_lb_pool.id
+    }
+  ]
 }

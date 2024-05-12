@@ -12,25 +12,24 @@ provider "azurerm" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  count = 2
-  name                = "${var.virtual_machine_name}${count.index}"
+  for_each = { for idx, vm in var.virtual_machines : idx => vm }
+
+  name                = each.value.name
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
-  size                = var.virtual_machine_size
-  admin_username      = var.virtual_machine_admin_username
-  network_interface_ids = [
-    var.virtual_machine_network_interface_ids[count.index]
-  ]
+  size                = each.value.size
+  admin_username      = each.value.admin_username
+  network_interface_ids = [var.virtual_machine_network_interface_ids[each.key]]
 
   admin_ssh_key {
-    username   = var.virtual_machine_admin_username
+    username   = each.value.admin_username
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
   os_disk {
-    name = "${var.disk_name}${count.index}"
+    name = each.value.disk_name
     caching              = "ReadWrite"
-    storage_account_type = var.redundancy_type
+    storage_account_type = each.value.redundancy_type
   }
 
   source_image_reference {
@@ -42,9 +41,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
 }
 
 resource "azurerm_virtual_machine_extension" "my_vm_extension" {
-  count                = 2
+  for_each = azurerm_linux_virtual_machine.vm
   name                 = "Nginx"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vm[count.index].id
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm[each.key].id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.0"
