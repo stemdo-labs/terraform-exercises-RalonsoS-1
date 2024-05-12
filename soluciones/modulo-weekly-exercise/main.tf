@@ -5,13 +5,6 @@ terraform {
       version = "3.102.0"
     }
   }
-
-  backend "azurerm" {
-      resource_group_name  = "rg1ralonso-lab01"
-      storage_account_name = "sta1ralonso"
-      container_name       = "tfstate"
-      key                  = "terraform_weekly.tfstate"
-  }
 }
 
 provider "azurerm" {
